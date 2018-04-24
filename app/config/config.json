@@ -1,0 +1,23 @@
+{
+    "application.name": "Luce - Liste de naissance",
+    "router.url-alias": {
+        "/": "Home"
+    },
+    "router.action-namespace": ["Luce\\Action"],
+    "atlas.connection": {
+        "default": {
+            "dsn": "sqlite:/Users/vincent/workspace/luce/db/birth-list.sqlite"
+        }
+    },
+    "services": {
+        "manager.birth_list": {
+            "id": "manager.birth_list",
+            "specifications": {
+                "class": "Luce\\Service\\BirthListManager",
+                "setters": {
+                    "setAtlas": "service(atlas.default)"
+                }
+            }
+        }
+    }
+}

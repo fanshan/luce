@@ -1,0 +1,23 @@
+{
+    "name": "vincent/luce",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Vincent Simonin",
+            "email": "vincent@simonin.name"
+        }
+    ],
+    "require": {
+        "php" : ">=7.2",
+        "objective-php/application": "dev-develop",
+        "objective-php/phtml-action": "dev-master",
+        "objective-php/services-factory": "dev-develop as v2.0.2",
+        "atlas/orm": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Luce\\": "app/src"
+        }
+    },
+    "minimum-stability": "alpha"
+}

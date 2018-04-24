@@ -1,0 +1,14 @@
+<?php
+use ObjectivePHP\Application\Config\ApplicationName;
+?>
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title><?= $this->param(ApplicationName::KEY) ?></title>
+    </head>
+    <body>
+        <?= $this->getViewOutput();  ?>
+    </body>
+</html>
+
