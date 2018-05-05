@@ -12,7 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 /**
  * Class Home
  *
- * @package Showcase\Action
+ * @package Showcase\Middleware
  */
 class Home extends PhtmlAction
 {
@@ -24,19 +24,14 @@ class Home extends PhtmlAction
     protected $birthListManager;
 
     /**
-     * Process an incoming server request and return a response, optionally delegating
-     * response creation to a handler.
-     *
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     * @throws \ObjectivePHP\Middleware\Action\PhtmlAction\Exception\PhtmlTemplateNotFoundException
+     * {@inheritdoc}
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         return $this->render([
-            'list' => $this->birthListManager->getListGroupByCategory()
+            'list' => $this->birthListManager->getListGroupByCategory($request->getQueryParams()['category'] ?? null),
+            'categories' => $this->birthListManager->getAllGiftCategories(),
+            'selected_category' => $request->getQueryParams()['category'] ?? null
         ]);
     }
 }

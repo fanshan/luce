@@ -2,7 +2,10 @@
 
 namespace Luce\Service;
 
-use Atlas\Orm\Atlas;
+use Luce\Domain\Gift\GiftInterface;
+use Luce\Domain\Gift\GiftRepository;
+use Luce\Persistence\Gift\GiftMapper;
+use Luce\Persistence\Gift\GiftRecord;
 
 /**
  * Class BirthList
@@ -12,43 +15,82 @@ use Atlas\Orm\Atlas;
 class BirthListManager
 {
     /**
-     * @var Atlas
+     * @var GiftRepository
      */
-    protected $atlas;
+    protected $giftRepository;
 
     /**
      * Retrieves the birth list grouped by category
      *
      * @param string|null $category
-     * @param array       $filters
+     *
+     * @return GiftInterface[]
+     * @throws \Atlas\Mapper\Exception
+     */
+    public function getListGroupByCategory(string $category = null): array
+    {
+        $criteria = [
+            'category' => $category
+        ];
+
+        $records = $this->getGiftRepository()->fetch($criteria)->getArrayCopy();
+
+        $list = [];
+        foreach ($records as $record) {
+            $list[$record['category']][] = $record;
+        }
+
+        return $list;
+    }
+
+    /**
+     * Retrieves all gift's categories
      *
      * @return array
      */
-    public function getListGroupByCategory(string $category = null, array $filters = []): array
+    public function getAllGiftCategories(): array
     {
-        return [];
+        return $this->getGiftRepository()->fetchCategories();
     }
 
     /**
-     * Get Atlas
+     * Someone give a gift
      *
-     * @return Atlas
+     * @param int    $gift
+     * @param string $whom
      */
-    public function getAtlas(): Atlas
+    public function markGiftAsGiven(int $gift, string $whom)
     {
-        return $this->atlas;
+        /** @var GiftRecord $gift */
+        $gift = $this->getGiftRepository()->getAtlas()->fetchRecord(GiftMapper::class, $gift);
+
+        if ($gift) {
+            $gift->set(['bought_by' => $whom]);
+
+            $this->giftRepository->getAtlas()->update($gift);
+        }
     }
 
     /**
-     * Set Atlas
+     * Get GiftRepository
      *
-     * @param Atlas $atlas
-     *
-     * @return $this
+     * @return GiftRepository
      */
-    public function setAtlas(Atlas $atlas)
+    public function getGiftRepository(): GiftRepository
     {
-        $this->atlas = $atlas;
+        return $this->giftRepository;
+    }
+
+    /**
+     * Set GiftRepository
+     *
+     * @param GiftRepository $giftRepository
+     *
+     * @return BirthListManager
+     */
+    public function setGiftRepository(GiftRepository $giftRepository): BirthListManager
+    {
+        $this->giftRepository = $giftRepository;
 
         return $this;
     }

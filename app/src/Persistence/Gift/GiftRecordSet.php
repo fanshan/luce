@@ -2,13 +2,13 @@
 
 namespace Luce\Persistence\Gift;
 
-use Atlas\Mapper\Mapper;
+use Atlas\Mapper\RecordSet;
 
 /**
- * Class GiftMapper
+ * Class GiftRecordSet
  *
  * @package Luce\Persistence\Gift
  */
-class GiftMapper extends Mapper
+class GiftRecordSet extends RecordSet
 {
 }

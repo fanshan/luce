@@ -2,21 +2,13 @@
 
 namespace Luce\Persistence\Image;
 
-use Atlas\Mapper\MapperRelationships;
-use Luce\Persistence\Gift\GiftMapper;
+use Atlas\Mapper\Mapper;
 
 /**
  * Class ImageMapper
  *
  * @package Luce\Persistence\Image
  */
-class ImageMapper extends MapperRelationships
+class ImageMapper extends Mapper
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function define()
-    {
-        $this->manyToOne('gift', GiftMapper::class);
-    }
 }

@@ -5,10 +5,21 @@ use ObjectivePHP\Application\Config\ApplicationName;
 <html lang="fr">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="/dist/main.css">
+        <link rel="stylesheet" href="/dist/style.css">
+
         <title><?= $this->param(ApplicationName::KEY) ?></title>
     </head>
-    <body>
-        <?= $this->getViewOutput();  ?>
+    <body class="container">
+        <h1><?= $this->param(ApplicationName::KEY) ?></h1>
+
+        <?= $this->getViewOutput(); ?>
+
+        <footer class="border-top pt-3">
+            <p>Propulsé à l'aide de logiciels libres et un peu d'huile de coude.</p>
+        </footer>
     </body>
 </html>
 

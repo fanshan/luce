@@ -1,23 +1,37 @@
 {
-    "application.name": "Luce - Liste de naissance",
+    "application.name": "Liste de naissance de Luce",
+    "application.password": "env(APP_PASSWORD)",
     "router.url-alias": {
         "/": "Home"
     },
-    "router.action-namespace": ["Luce\\Action"],
+    "router.action-namespace": {
+        "default": "Luce\\Action"
+    },
     "atlas.connection": {
         "default": {
-            "dsn": "sqlite:/Users/vincent/workspace/luce/db/birth-list.sqlite"
+            "dsn": "env(DB_DSN)"
         }
     },
     "services": {
         "manager.birth_list": {
-            "id": "manager.birth_list",
-            "specifications": {
-                "class": "Luce\\Service\\BirthListManager",
-                "setters": {
-                    "setAtlas": "service(atlas.default)"
-                }
+            "class": "Luce\\Service\\BirthListManager",
+            "setters": {
+                "setGiftRepository": "service(domain.gift_repository)"
             }
+        },
+        "manager.image": {
+            "class": "Luce\\Service\\ImageManager",
+            "setters": {
+                "setImageRepository": "service(domain.image_repository)"
+            }
+        },
+        "domain.gift_repository": {
+            "class": "Luce\\Domain\\Gift\\GiftRepository",
+            "params": ["service(atlas.default)"]
+        },
+        "domain.image_repository": {
+            "class": "Luce\\Domain\\Image\\ImageRepository",
+            "params": ["service(atlas.default)"]
         }
     }
 }

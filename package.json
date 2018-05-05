@@ -1,0 +1,24 @@
+{
+  "name": "luce",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Vincent Simonin <vincent@simonin.name>",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.1.0",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^8.4.1",
+    "css-loader": "^0.28.11",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "node-sass": "^4.9.0",
+    "postcss-loader": "^2.1.4",
+    "precss": "^3.1.2",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.15"
+  }
+}

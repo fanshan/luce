@@ -9,10 +9,15 @@
     ],
     "require": {
         "php" : ">=7.2",
-        "objective-php/application": "dev-develop",
-        "objective-php/phtml-action": "dev-master",
-        "objective-php/services-factory": "dev-develop as v2.0.2",
-        "atlas/orm": "~3.0"
+        "objective-php/application": "^2.0.0",
+        "objective-php/services-factory": "dev-master",
+        "objective-php/phtml-action": "^2.0.0",
+        "atlas/orm": "~3.0",
+        "middlewares/cache": "^1.0",
+        "vlucas/phpdotenv": "^2.4"
+    },
+    "require-dev": {
+        "atlas/cli": "~2.0"
     },
     "autoload": {
         "psr-4": {

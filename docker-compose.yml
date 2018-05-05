@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+
+    nginx:
+        build:
+            context: docker/nginx
+        ports:
+            - 80:80
+        volumes:
+            - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+            - ./docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:ro
+            - .:/var/www/html
+        networks:
+          - app
+
+    php-fpm:
+        build:
+            context: docker/php
+        volumes:
+            - .:/var/www/html
+        networks:
+            - app
+
+networks:
+    app:
