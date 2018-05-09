@@ -6,6 +6,7 @@ use Atlas\Mapper\RecordSet;
 use Luce\Domain\AbstractRepository;
 use Luce\Persistence\Gift\GiftMapper;
 use Luce\Persistence\Gift\GiftRecordSet;
+use Luce\Service\BirthListManager;
 
 /**
  * Class GiftRepository
@@ -31,6 +32,10 @@ class GiftRepository extends AbstractRepository
 
         if (isset($criteria['category'])) {
             $select->andWhere('category = ', $criteria['category']);
+        }
+
+        if (isset($criteria['offered']) && $criteria['offered'] === BirthListManager::SHOW_NOT_OFFERED) {
+            $select->andWhere('bought_by IS NULL');
         }
 
         return $select->fetchRecordSet();

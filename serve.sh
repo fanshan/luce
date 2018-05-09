@@ -39,4 +39,4 @@ echo "Listening to port: $PORT"
 echo "Application environment: $APPLICATION_ENV"
 echo ""
 echo ""
-env APPLICATION_ENV=$APPLICATION_ENV php -S localhost:$PORT -t public
+env APPLICATION_ENV=$APPLICATION_ENV php -S 0.0.0.0:$PORT -t public

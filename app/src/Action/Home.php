@@ -29,9 +29,13 @@ class Home extends PhtmlAction
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         return $this->render([
-            'list' => $this->birthListManager->getListGroupByCategory($request->getQueryParams()['category'] ?? null),
+            'list' => $this->birthListManager->getListGroupByCategory(
+                $request->getQueryParams()['category'] ?? null,
+                $request->getQueryParams()['offered'] ?? BirthListManager::SHOW_ALL
+            ),
             'categories' => $this->birthListManager->getAllGiftCategories(),
-            'selected_category' => $request->getQueryParams()['category'] ?? null
+            'selected_category' => $request->getQueryParams()['category'] ?? null,
+            'offered' => $request->getQueryParams()['offered'] ?? BirthListManager::SHOW_ALL
         ]);
     }
 }

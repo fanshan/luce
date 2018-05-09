@@ -84,6 +84,16 @@ class GiftTable extends Table
             'autoinc' => false,
             'primary' => false,
         ],
+        'is_buyer_anonymous' => [
+            'name' => 'is_buyer_anonymous',
+            'type' => 'BOOLEAN',
+            'size' => null,
+            'scale' => null,
+            'notnull' => true,
+            'default' => false,
+            'autoinc' => false,
+            'primary' => false,
+        ],
     ];
 
     const COLUMN_NAMES = [
@@ -94,6 +104,7 @@ class GiftTable extends Table
         'online_shop_url',
         'bought_by',
         'what',
+        'is_buyer_anonymous'
     ];
 
     const COLUMN_DEFAULTS = [
@@ -104,6 +115,7 @@ class GiftTable extends Table
         'online_shop_url' => '',
         'bought_by' => null,
         'what' => '',
+        'is_buyer_anonymous' => false
     ];
 
     const PRIMARY_KEY = [

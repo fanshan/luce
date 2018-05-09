@@ -24,4 +24,6 @@ interface GiftInterface
     public function getOnlineShopUrl(): string;
 
     public function getBoughtBy(): ?string;
+
+    public function getIsBuyerAnonymous(): bool;
 }

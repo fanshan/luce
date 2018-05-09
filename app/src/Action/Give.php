@@ -30,11 +30,29 @@ class Give extends HttpAction implements InjectionAnnotationProvider
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $this->birthListManager->markGiftAsGiven(1, 'test');
-
         if ($request->getMethod() != 'POST') {
             $response = new Response('php://memory', 405, ['Content-Type' => 'text/plain']);
             $response->getBody()->write('Method Not Allowed');
+
+            return $response;
+        }
+
+        $body = $request->getParsedBody();
+
+        if (array_keys($body) !== ['what', 'whom', 'anonymous']) {
+            return new Response('php://memory', 400);
+        }
+
+        try {
+            $this->birthListManager->markGiftAsGiven(
+                (int) $body['what'],
+                (string) $body['whom'],
+                (bool) $body['anonymous']
+            );
+        } catch (\Exception $e) {
+            $response = new Response('php://memory', 500, ['Content-Type' => 'application/json']);
+
+            $response->getBody()->write(json_encode(['error' => $e->getMessage()]));
 
             return $response;
         }

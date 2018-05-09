@@ -4,6 +4,7 @@ namespace Luce\Service;
 
 use Luce\Domain\Gift\GiftInterface;
 use Luce\Domain\Gift\GiftRepository;
+use Luce\Exception\GiftAlreadyOfferedException;
 use Luce\Persistence\Gift\GiftMapper;
 use Luce\Persistence\Gift\GiftRecord;
 
@@ -14,6 +15,9 @@ use Luce\Persistence\Gift\GiftRecord;
  */
 class BirthListManager
 {
+    const SHOW_ALL = 1;
+    const SHOW_NOT_OFFERED = 0;
+
     /**
      * @var GiftRepository
      */
@@ -23,14 +27,16 @@ class BirthListManager
      * Retrieves the birth list grouped by category
      *
      * @param string|null $category
+     * @param int         $offered
      *
      * @return GiftInterface[]
      * @throws \Atlas\Mapper\Exception
      */
-    public function getListGroupByCategory(string $category = null): array
+    public function getListGroupByCategory(string $category = null, int $offered = self::SHOW_ALL): array
     {
         $criteria = [
-            'category' => $category
+            'category' => $category,
+            'offered' => $offered
         ];
 
         $records = $this->getGiftRepository()->fetch($criteria)->getArrayCopy();
@@ -58,14 +64,19 @@ class BirthListManager
      *
      * @param int    $gift
      * @param string $whom
+     * @param bool   $wantToBeAnonymous
      */
-    public function markGiftAsGiven(int $gift, string $whom)
+    public function markGiftAsGiven(int $gift, string $whom, bool $wantToBeAnonymous = false)
     {
         /** @var GiftRecord $gift */
         $gift = $this->getGiftRepository()->getAtlas()->fetchRecord(GiftMapper::class, $gift);
 
         if ($gift) {
-            $gift->set(['bought_by' => $whom]);
+            if ($gift->getRow()->bought_by) {
+                throw new GiftAlreadyOfferedException(sprintf('%s a déjà été offert.', $gift->getRow()->what));
+            }
+
+            $gift->set(['bought_by' => $whom, 'is_buyer_anonymous' => $wantToBeAnonymous]);
 
             $this->giftRepository->getAtlas()->update($gift);
         }

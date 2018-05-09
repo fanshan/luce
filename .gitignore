@@ -1,5 +1,5 @@
 vendor/
-db/
+db/database/
 node_modules/
 public/dist/
 .env

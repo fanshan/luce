@@ -19,5 +19,6 @@ class GiftRow extends Row
         'online_shop_url' => '',
         'bought_by' => null,
         'what' => '',
+        'is_buyer_anonymous' => false
     ];
 }

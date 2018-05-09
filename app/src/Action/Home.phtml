@@ -1,30 +1,47 @@
 <?php
 /** @var ObjectivePHP\Middleware\Action\PhtmlAction\PhtmlAction $this */
 
+use Luce\Service\BirthListManager;
+
 $fmt = numfmt_create('fr_FR', NumberFormatter::CURRENCY);
+
+$query = [];
+$query['category'] = $this->get('selected_category') ?? null;
+$query['offered'] = $this->get('offered') !== BirthListManager::SHOW_ALL ? $this->get('offered') : null;
+
+function build_query_string(array $base, array $query)
+{
+    $query = http_build_query(array_merge($base, $query));
+
+    return empty($query) ? '/' : '/?' . $query;
+}
 ?>
 <div class="row">
-    <nav class="col-sm-3 order-last">
+    <nav class="col-md-3 order-last">
         <h2>À propos</h2>
         <p>
             Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.
         </p>
 
         <p>
-            <a href="" class="lead btn btn-success">Afficher ce qui reste à offrir.</a>
+            <?php if ($this->get('offered') == BirthListManager::SHOW_ALL) : ?>
+                <a href="<?= build_query_string($query, ['offered' => 0]) ?>" class="lead btn btn-success">Afficher ce qui reste à offrir</a>
+            <?php else : ?>
+                <a href="<?= build_query_string($query, ['offered' => null]) ?>" class="lead btn btn-success">Touts afficher</a>
+            <?php endif; ?>
         </p>
 
         <h2>Choisir une catégorie</h2>
 
         <p class="category">
-        <?php foreach ($this->get('categories') as $category): ?>
-            <?php if ($category == $this->get('selected_category')): ?>
-                <a class="btn btn-dark" href="/">
+        <?php foreach ($this->get('categories') as $category) : ?>
+            <?php if ($category == $this->get('selected_category')) : ?>
+                <a class="btn btn-dark mb-1" href="<?= build_query_string($query, ['category' => null]) ?>">
                     <?= htmlspecialchars($category, ENT_QUOTES|ENT_SUBSTITUTE) ?>
                     <span>&times;</span>
                 </a>
-            <?php else: ?>
-                <a class="btn btn-light" href="<?= sprintf('/?category=%s', $category) ?>">
+            <?php else : ?>
+                <a class="btn btn-light mb-1" href="<?= build_query_string($query, ['category' => $category]) ?>">
                     <?= htmlspecialchars($category, ENT_QUOTES|ENT_SUBSTITUTE) ?>
                 </a>
             <?php endif; ?>
@@ -32,14 +49,14 @@ $fmt = numfmt_create('fr_FR', NumberFormatter::CURRENCY);
         </p>
     </nav>
 
-    <main class="col-sm-9">
-    <?php foreach ($this->get('list') as $category => $list): ?>
+    <main class="col-md-9">
+    <?php foreach ($this->get('list') as $category => $list) : ?>
         <section class="category">
             <h2><?= htmlspecialchars($category, ENT_QUOTES|ENT_SUBSTITUTE) ?></h2>
             <div class="card-columns">
-                <?php foreach ($list as $gift): ?>
+                <?php foreach ($list as $gift) : ?>
                 <article class="card gift<?= !empty($gift['bought_by']) ? ' offered' : '' ?>">
-                    <?php if (!empty($gift['images'])): ?>
+                    <?php if (!empty($gift['images'])) : ?>
                         <a class="card-img-top" href="<?= htmlspecialchars($gift['online_shop_url'], ENT_QUOTES|ENT_SUBSTITUTE) ?>" title="Voir sur une boutique en ligne">
                             <img
                                 class="image img-fluid"
@@ -59,12 +76,14 @@ $fmt = numfmt_create('fr_FR', NumberFormatter::CURRENCY);
                         <a class="url card-link" href="<?= htmlspecialchars($gift['online_shop_url'], ENT_QUOTES|ENT_SUBSTITUTE) ?>">Voir sur une boutique</a>
                     </div>
                     <footer class="card-footer lead clearfix">
-                        <?php if (empty($gift['bought_by'])): ?>
+                        <?php if (empty($gift['bought_by'])) : ?>
                             <span class="align-middle">
                                 Environ <?= numfmt_format_currency($fmt, htmlspecialchars($gift['observed_price'], ENT_QUOTES|ENT_SUBSTITUTE), 'EUR') ?>
                             </span>
-                            <button class="btn btn-primary float-right align-top" type="button" data-toggle="modal" data-target="#give-modal">Offrir</button>
-                        <?php else: ?>
+                            <button class="btn btn-primary float-right align-top" type="button" data-toggle="modal" data-target="#give-modal" data-what="<?= htmlspecialchars($gift['what'], ENT_QUOTES|ENT_SUBSTITUTE) ?>" data-what-id="<?= htmlspecialchars($gift['id'], ENT_QUOTES|ENT_SUBSTITUTE) ?>">Offrir</button>
+                        <?php elseif ($gift['is_buyer_anonymous']) : ?>
+                            Offert
+                        <?php else : ?>
                             Offert par <em><?= htmlspecialchars($gift['bought_by'], ENT_QUOTES|ENT_SUBSTITUTE) ?></em>
                         <?php endif; ?>
                     </footer>
@@ -73,7 +92,7 @@ $fmt = numfmt_create('fr_FR', NumberFormatter::CURRENCY);
             </div>
         </section>
     <?php endforeach; ?>
-        <div class="modal fade" id="give-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="give-modal" tabindex="-1" role="dialog" aria-labelledby="giveModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -83,12 +102,21 @@ $fmt = numfmt_create('fr_FR', NumberFormatter::CURRENCY);
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <div id="give-alert" class="alert alert-danger d-none"></div>
+                        <form id="give-form">
                             <div class="form-group">
                                 <label for="whom">Votre nom&nbsp:</label>
-                                <input type="text" class="form-control" id="whom" name="whom">
+                                <input type="text" class="form-control" id="whom" name="whom" required>
+                                <div class="invalid-feedback">
+                                    Veuillez donner votre nom.
+                                </div>
+                            </div>
+                            <div class="form-group form-check">
+                                <input type="checkbox" class="form-check-input" id="anonymous" name="anonymous" value="">
+                                <label class="form-check-label" for="anonymous">Ne pas afficher mon nom</label>
                             </div>
                         </form>
+                        <input name="what-id" id="what-id" type="hidden" value="">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
@@ -102,14 +130,57 @@ $fmt = numfmt_create('fr_FR', NumberFormatter::CURRENCY);
 <script src="/dist/build.js"></script>
 <script>
 (function ($) {
-    const give = $('#give');
+    const
+        giveModal = $('#give-modal'),
+        give = $('#give'),
+        whom = $('#whom'),
+        whatId = $('#what-id'),
+        giveAlert = $('#give-alert');
 
-    give.click(function (event) {
-        const whom = $('#whom');
+    giveModal.on('show.bs.modal', function (event) {
+        const
+            button = $(event.relatedTarget),
+            recipient = button.data('what'),
+            modal = $(this);
 
-        console.log(whom.val());
-        if (whom.val().trim() !== '') {
-            alert(whom.val());
+        whatId.val(button.data('what-id'));
+        modal.find('.modal-title').html('Offrir <em>' + recipient + '</em>');
+    });
+
+    giveModal.on('hide.bs.modal', function (e) {
+        const form = document.getElementById('give-form');
+
+        form.reset();
+        whom.removeClass('is-invalid');
+        giveAlert.addClass('d-none');
+        giveAlert.text('');
+    });
+
+    give.on('click', function (event) {
+        const form = document.getElementById('give-form');
+
+        if (form.checkValidity() === false) {
+            whom.addClass('is-invalid');
+            event.preventDefault();
+            event.stopPropagation();
+        } else {
+            whom.removeClass('is-invalid');
+            $.post(
+                "/give",
+                {'what': whatId.val(), 'whom': whom.val(), 'anonymous': $('#anonymous').is(':checked') ? 1 : 0}
+            )
+            .done(function() {
+                giveModal.modal('hide');
+            })
+            .fail(function(data) {
+                if (data.responseJSON !== undefined) {
+                    giveAlert.text(data.responseJSON.error);
+                } else {
+                    giveAlert.text('Oups une erreur est survenue...');
+                }
+
+                giveAlert.removeClass('d-none');
+            });
         }
     });
 })(window.jQuery);

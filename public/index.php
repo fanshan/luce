@@ -7,7 +7,9 @@ $autoloader = require '../vendor/autoload.php';
 
 chdir(dirname(__DIR__));
 
-(new Dotenv('.'))->load();
+if (file_exists('.env')) {
+    (new Dotenv('.'))->load();
+}
 
 $app = new Application($autoloader);
 

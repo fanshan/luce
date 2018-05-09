@@ -14,7 +14,8 @@
         "objective-php/phtml-action": "^2.0.0",
         "atlas/orm": "~3.0",
         "middlewares/cache": "^1.0",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "robmorgan/phinx": "^0.9.2"
     },
     "require-dev": {
         "atlas/cli": "~2.0"
