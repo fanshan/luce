@@ -3,7 +3,7 @@
 service nginx start
 service php7.2-fpm start
 
-composer.phar install --no-dev -o
+composer.phar install --no-dev -o --no-ansi
 yarn install
 
 ./node_modules/.bin/webpack-cli
