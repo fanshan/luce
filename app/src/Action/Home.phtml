@@ -17,39 +17,47 @@ function build_query_string(array $base, array $query)
     return empty($query) ? '/' : '/?' . $query;
 }
 ?>
+<nav class="navbar navbar-light fixed-top border-bottom">
+    <h1><a href="/" class="text-dark"><span class="d-none d-sm-inline">Liste de naissance de </span>Luce</a></h1>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<nav id="sidebar" class="collapse position-fixed border-bottom">
+    <p>
+        <?php if ($this->get('offered') == BirthListManager::SHOW_ALL) : ?>
+            <a href="<?= build_query_string($query, ['offered' => 0]) ?>" class="lead btn btn-success">Afficher ce qui reste à offrir</a>
+        <?php else : ?>
+            <a href="<?= build_query_string($query, ['offered' => null]) ?>" class="lead btn btn-success">Touts afficher</a>
+        <?php endif; ?>
+    </p>
+
+    <h2 class="border-bottom">Choisir une catégorie</h2>
+
+    <p class="category">
+    <?php foreach ($this->get('categories') as $category) : ?>
+        <?php if ($category == $this->get('selected_category')) : ?>
+            <a class="btn btn-dark mb-1" href="<?= build_query_string($query, ['category' => null]) ?>">
+                <?= htmlspecialchars($category, ENT_QUOTES|ENT_SUBSTITUTE) ?>
+                <span>&times;</span>
+            </a>
+        <?php else : ?>
+            <a class="btn btn-light mb-1" href="<?= build_query_string($query, ['category' => $category]) ?>">
+                <?= htmlspecialchars($category, ENT_QUOTES|ENT_SUBSTITUTE) ?>
+            </a>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    </p>
+</nav>
+
 <div class="row">
-    <nav class="col-md-3 order-last">
-        <h2>À propos</h2>
+    <aside class="col-md-3 order-last">
+        <h2 class="border-bottom">À propos</h2>
         <p>
             Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.
         </p>
-
-        <p>
-            <?php if ($this->get('offered') == BirthListManager::SHOW_ALL) : ?>
-                <a href="<?= build_query_string($query, ['offered' => 0]) ?>" class="lead btn btn-success">Afficher ce qui reste à offrir</a>
-            <?php else : ?>
-                <a href="<?= build_query_string($query, ['offered' => null]) ?>" class="lead btn btn-success">Touts afficher</a>
-            <?php endif; ?>
-        </p>
-
-        <h2>Choisir une catégorie</h2>
-
-        <p class="category">
-        <?php foreach ($this->get('categories') as $category) : ?>
-            <?php if ($category == $this->get('selected_category')) : ?>
-                <a class="btn btn-dark mb-1" href="<?= build_query_string($query, ['category' => null]) ?>">
-                    <?= htmlspecialchars($category, ENT_QUOTES|ENT_SUBSTITUTE) ?>
-                    <span>&times;</span>
-                </a>
-            <?php else : ?>
-                <a class="btn btn-light mb-1" href="<?= build_query_string($query, ['category' => $category]) ?>">
-                    <?= htmlspecialchars($category, ENT_QUOTES|ENT_SUBSTITUTE) ?>
-                </a>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        </p>
-    </nav>
-
+    </aside>
     <main class="col-md-9">
     <?php if (!$this->get('list')) : ?>
         <div class="alert alert-primary" role="alert">
@@ -61,7 +69,7 @@ function build_query_string(array $base, array $query)
     <?php endif; ?>
     <?php foreach ($this->get('list') as $category => $list) : ?>
         <section class="category">
-            <h2><?= htmlspecialchars($category, ENT_QUOTES|ENT_SUBSTITUTE) ?></h2>
+            <h2 class="border-bottom"><?= htmlspecialchars($category, ENT_QUOTES|ENT_SUBSTITUTE) ?></h2>
             <div class="card-columns">
                 <?php foreach ($list as $gift) : ?>
                 <article class="card gift<?= !empty($gift['bought_by']) ? ' offered' : '' ?>" id="gift-<?= htmlspecialchars($gift['id'], ENT_QUOTES|ENT_SUBSTITUTE) ?>">
@@ -89,7 +97,7 @@ function build_query_string(array $base, array $query)
                             <span class="align-middle">
                                 Environ <?= numfmt_format_currency($fmt, htmlspecialchars($gift['observed_price'], ENT_QUOTES|ENT_SUBSTITUTE), 'EUR') ?>
                             </span>
-                            <button class="btn btn-primary float-right align-top" type="button" data-toggle="modal" data-target="#give-modal" data-what="<?= htmlspecialchars($gift['what'], ENT_QUOTES|ENT_SUBSTITUTE) ?>" data-what-id="<?= htmlspecialchars($gift['id'], ENT_QUOTES|ENT_SUBSTITUTE) ?>">Offrir</button>
+                            <button class="btn btn-primary d-block mt-1" type="button" data-toggle="modal" data-target="#give-modal" data-what="<?= htmlspecialchars($gift['what'], ENT_QUOTES|ENT_SUBSTITUTE) ?>" data-what-id="<?= htmlspecialchars($gift['id'], ENT_QUOTES|ENT_SUBSTITUTE) ?>">Offrir</button>
                         <?php elseif ($gift['is_buyer_anonymous']) : ?>
                             Offert
                         <?php else : ?>

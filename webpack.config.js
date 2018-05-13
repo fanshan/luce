@@ -1,6 +1,5 @@
 const path = require("path");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const webpack = require('webpack');
 
 const extractSass = new ExtractTextPlugin("main.css");
 const extractCss = new ExtractTextPlugin("style.css");
@@ -37,14 +36,14 @@ module.exports = {
                         'sass-loader'
                     ]
                 })
+            },
+            {
+                test: /\.jpg$/,
+                loader: "file-loader"
             }
         ]
     },
     plugins: [
-        /*new webpack.ProvidePlugin({
-            jQuery: 'jquery',
-            $: 'jquery'
-        })*/
         extractCss,
         extractSass
     ]

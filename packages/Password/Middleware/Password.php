@@ -28,7 +28,7 @@ class Password extends PhtmlAction
             $password = $request->getParsedBody()['password'] ?? null;
 
             if ($password == $this->getApplication()->getConfig()->get('application.password')) {
-                $session->set('is_logged', true);
+                $session->set('password', $password);
 
                 return $this->redirect('/');
             }
@@ -36,7 +36,7 @@ class Password extends PhtmlAction
             $message = 'Ceci n\'est pas le mot de passe !';
         }
 
-        if (!$session->get('is_logged', false)) {
+        if ($session->get('password') != $this->getApplication()->getConfig()->get('application.password')) {
             return $this->render(['message' => $message]);
         }
 

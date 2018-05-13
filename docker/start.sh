@@ -11,6 +11,8 @@ service php7.2-fpm start
 ./vendor/bin/phinx migrate
 ./vendor/bin/phinx seed:run
 
+chown -R www-data:www-data ./db/database
+
 echo "App running on port 8080"
 
 tail -f /var/log/nginx/error.log

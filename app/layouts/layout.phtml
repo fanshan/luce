@@ -7,19 +7,22 @@ use ObjectivePHP\Application\Config\ApplicationName;
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Gabriela">
         <link rel="stylesheet" href="/dist/main.css">
         <link rel="stylesheet" href="/dist/style.css">
 
         <title><?= $this->param(ApplicationName::KEY) ?></title>
     </head>
-    <body class="container-fluid">
-        <h1><?= $this->param(ApplicationName::KEY) ?></h1>
+    <body>
+        <main class="site container-fluid">
+            <div class="site-content">
+                <?= $this->getViewOutput(); ?>
+            </div>
 
-        <?= $this->getViewOutput(); ?>
-
-        <footer class="border-top pt-3">
-            <p>Propulsé à l'aide de logiciels libres et un peu d'huile de coude.</p>
-        </footer>
+            <footer class="border-top">
+                <p>Propulsé à l'aide de logiciels libres et un peu d'huile de coude. <span class="lead">👨‍👩‍👧</span></p>
+            </footer>
+        </main>
     </body>
 </html>
 
