@@ -39,10 +39,14 @@ RUN chown -R www-data:www-data /var/www/html
 
 RUN nginx -t
 
-RUN composer.phar install --no-dev -o --no-ansi
-RUN yarn install
-RUN ./node_modules/.bin/webpack-cli
-RUN rm -rf node_modules
+#RUN composer.phar install --no-dev -o --no-ansi
+#RUN yarn install
+#RUN ./node_modules/.bin/webpack-cli
+#RUN rm -rf node_modules
+
+#RUN export APP_PASSWORD=test
+#RUN echo "export APP_PASSWORD=$HOME" >> /etc/profile.d/app.sh
+#RUN export
 
 EXPOSE 8080
 
