@@ -1,5 +1,10 @@
 #!/bin/sh
 
+export
+
+echo "APP_PASSWORD=$APP_PASSWORD" >> .env
+echo "DB_DSN=$DB_DSN" >> .env
+
 service nginx start
 service php7.2-fpm start
 
