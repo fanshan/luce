@@ -30,6 +30,6 @@ class Application extends AbstractHttpApplication
         $this->registerPackage(new PhtmlActionPackage());
         $this->registerPackage(new AtlasPackage());
 
-        //$this->getMiddlewares()->registerMiddleware(new Expires());
+        $this->getMiddlewares()->registerMiddleware(new Expires());
     }
 }

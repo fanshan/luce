@@ -27,18 +27,19 @@ RUN chmod a+x /usr/local/bin/composer.phar
 
 RUN npm install --global yarn
 
+ADD ./docker/nginx/luce.conf /etc/nginx/sites-available/luce.conf
+RUN ln -s /etc/nginx/sites-available/luce.conf /etc/nginx/sites-enabled/luce.conf
+
 ADD . /var/www/html
 WORKDIR /var/www/html
 RUN chown -R www-data:www-data /var/www/html
-
-ADD ./docker/nginx/luce.conf /etc/nginx/sites-available/luce.conf
-RUN ln -s /etc/nginx/sites-available/luce.conf /etc/nginx/sites-enabled/luce.conf
 
 RUN nginx -t
 
 RUN composer.phar install --no-dev -o --no-ansi
 RUN yarn install
 RUN ./node_modules/.bin/webpack-cli
+RUN rm -rf node_modules
 
 EXPOSE 8080
 
