@@ -14,14 +14,26 @@ module.exports = {
         rules: [
             {
                 test: /\.(css)$/,
-                use: extractCss.extract(['css-loader'])
+                use: extractCss.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: { minimize: true }
+                        }
+                    ]
+
+                })
             },
             {
                 test: /\.(scss)$/,
                 use: extractSass.extract({
                     fallback: 'style-loader',
                     use: [
-                        'css-loader',
+                        {
+                            loader: 'css-loader',
+                            options: { minimize: true }
+                        },
                         {
                             loader: 'postcss-loader',
                             options: {
