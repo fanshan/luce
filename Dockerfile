@@ -44,6 +44,7 @@ RUN yarn install
 RUN ./node_modules/.bin/webpack-cli
 RUN rm -rf node_modules
 
+RUN export
 RUN echo "APP_PASSWORD=$APP_PASSWORD" >> .env
 RUN echo "DB_DSN=$DB_DSN" >> .env
 
