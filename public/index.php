@@ -1,7 +1,5 @@
 <?php
 
-var_dump($_ENV); die();
-
 use Dotenv\Dotenv;
 use Luce\Application;
 
@@ -12,6 +10,8 @@ chdir(dirname(__DIR__));
 if (file_exists('.env')) {
     (new Dotenv('.'))->load();
 }
+
+var_dump($_ENV);
 
 $app = new Application($autoloader);
 
