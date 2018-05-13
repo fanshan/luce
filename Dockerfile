@@ -8,11 +8,14 @@ RUN sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 
 RUN apt-get update && apt-get install -y \
+    git \
     nginx \
     php-fpm \
     php-mbstring \
     php-intl \
     php-sqlite3 \
+    php-zip \
+    php-xml \
     nodejs
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"

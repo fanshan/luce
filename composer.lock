@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "42ad95e78024c4c84d32dbd533cde63d",
+    "content-hash": "72e960ee19cb1c60e5ad664bcf2afe2f",
     "packages": [
         {
             "name": "atlas/mapper",
@@ -713,16 +713,16 @@
         },
         {
             "name": "objective-php/application",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/application.git",
-                "reference": "33357ef38f7b719d1e42f495268695f8f0436c29"
+                "reference": "16b930ddcc9ecbd34046c9ccc621ddc16b942e62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/application/zipball/33357ef38f7b719d1e42f495268695f8f0436c29",
-                "reference": "33357ef38f7b719d1e42f495268695f8f0436c29",
+                "url": "https://api.github.com/repos/objective-php/application/zipball/16b930ddcc9ecbd34046c9ccc621ddc16b942e62",
+                "reference": "16b930ddcc9ecbd34046c9ccc621ddc16b942e62",
                 "shasum": ""
             },
             "require": {
@@ -733,7 +733,7 @@
                 "objective-php/notification": "^1.0.0",
                 "objective-php/primitives": "^1.3.0",
                 "objective-php/router": "^2.0.0",
-                "objective-php/services-factory": "dev-master as v2.0.0",
+                "objective-php/services-factory": "^2.0.0",
                 "php": ">=7.0",
                 "psr/http-server-handler": "^1.0",
                 "psr/http-server-middleware": "^1.0",
@@ -765,7 +765,7 @@
                 "framework",
                 "objective php"
             ],
-            "time": "2018-04-30T10:00:27+00:00"
+            "time": "2018-05-11T12:43:03+00:00"
         },
         {
             "name": "objective-php/config",
@@ -1148,16 +1148,16 @@
         },
         {
             "name": "objective-php/phtml-action",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/phtml-action.git",
-                "reference": "fd65e94753d80f08bdbe5e7ab649c7fb3080827d"
+                "reference": "dccf32a500ccd45e0e5ae0bffde90d529c9dabb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/objective-php/phtml-action/zipball/fd65e94753d80f08bdbe5e7ab649c7fb3080827d",
-                "reference": "fd65e94753d80f08bdbe5e7ab649c7fb3080827d",
+                "url": "https://api.github.com/repos/objective-php/phtml-action/zipball/dccf32a500ccd45e0e5ae0bffde90d529c9dabb3",
+                "reference": "dccf32a500ccd45e0e5ae0bffde90d529c9dabb3",
                 "shasum": ""
             },
             "require": {
@@ -1165,7 +1165,7 @@
                 "objective-php/html": "^1.0",
                 "objective-php/http-action": "^1.0",
                 "objective-php/primitives": "^1.3",
-                "objective-php/services-factory": "dev-master as v2.0.0",
+                "objective-php/services-factory": "^2.0.0",
                 "php": "^7.0"
             },
             "require-dev": {
@@ -1197,7 +1197,7 @@
                 "psr-15",
                 "view"
             ],
-            "time": "2018-04-30T10:10:12+00:00"
+            "time": "2018-05-13T12:03:50+00:00"
         },
         {
             "name": "objective-php/primitives",
@@ -1305,7 +1305,7 @@
         },
         {
             "name": "objective-php/services-factory",
-            "version": "dev-master",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/objective-php/services-factory.git",
@@ -2426,9 +2426,7 @@
     ],
     "aliases": [],
     "minimum-stability": "alpha",
-    "stability-flags": {
-        "objective-php/services-factory": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

@@ -7,6 +7,8 @@ composer.phar install --no-dev -o
 yarn install
 
 ./node_modules/.bin/webpack-cli
+./vendor/bin/phinx migrate
+./vendor/bin/phinx seed:run
 
 echo "App running on port 8080"
 

@@ -1,5 +1,6 @@
 {
     "name": "vincent/luce",
+    "license": "MIT",
     "type": "project",
     "authors": [
         {
@@ -10,7 +11,6 @@
     "require": {
         "php" : ">=7.2",
         "objective-php/application": "^2.0.0",
-        "objective-php/services-factory": "dev-master",
         "objective-php/phtml-action": "^2.0.0",
         "atlas/orm": "~3.0",
         "middlewares/cache": "^1.0",

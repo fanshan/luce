@@ -1,4 +1,5 @@
 <?php
+
 /** @var ObjectivePHP\Middleware\Action\PhtmlAction\PhtmlAction $this */
 
 use Luce\Service\BirthListManager;
@@ -50,12 +51,20 @@ function build_query_string(array $base, array $query)
     </nav>
 
     <main class="col-md-9">
+    <?php if (!$this->get('list')) : ?>
+        <div class="alert alert-primary" role="alert">
+            <h2 class="alert-heading">Il n'y a plus rien à voir ici...</h2>
+            <p>Ce que vous cherchez n'existe plus.</p>
+            <hr>
+            <a href="/" class="alert-link">Retourner à la page d'acceuil</a>
+        </div>
+    <?php endif; ?>
     <?php foreach ($this->get('list') as $category => $list) : ?>
         <section class="category">
             <h2><?= htmlspecialchars($category, ENT_QUOTES|ENT_SUBSTITUTE) ?></h2>
             <div class="card-columns">
                 <?php foreach ($list as $gift) : ?>
-                <article class="card gift<?= !empty($gift['bought_by']) ? ' offered' : '' ?>">
+                <article class="card gift<?= !empty($gift['bought_by']) ? ' offered' : '' ?>" id="gift-<?= htmlspecialchars($gift['id'], ENT_QUOTES|ENT_SUBSTITUTE) ?>">
                     <?php if (!empty($gift['images'])) : ?>
                         <a class="card-img-top" href="<?= htmlspecialchars($gift['online_shop_url'], ENT_QUOTES|ENT_SUBSTITUTE) ?>" title="Voir sur une boutique en ligne">
                             <img
@@ -135,6 +144,7 @@ function build_query_string(array $base, array $query)
         give = $('#give'),
         whom = $('#whom'),
         whatId = $('#what-id'),
+        anonymous = $('#anonymous'),
         giveAlert = $('#give-alert');
 
     giveModal.on('show.bs.modal', function (event) {
@@ -147,13 +157,30 @@ function build_query_string(array $base, array $query)
         modal.find('.modal-title').html('Offrir <em>' + recipient + '</em>');
     });
 
+    giveModal.on('shown.bs.modal', function () {
+        document.getElementById('whom').focus();
+    });
+
     giveModal.on('hide.bs.modal', function (e) {
         const form = document.getElementById('give-form');
+
+        whom.prop("disabled", false);
+        anonymous.prop("disabled", false);
 
         form.reset();
         whom.removeClass('is-invalid');
         giveAlert.addClass('d-none');
         giveAlert.text('');
+    });
+
+    $('#give-modal form').on('keypress', function(e) {
+        const keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            give.click();
+
+            return false;
+        }
     });
 
     give.on('click', function (event) {
@@ -165,12 +192,36 @@ function build_query_string(array $base, array $query)
             event.stopPropagation();
         } else {
             whom.removeClass('is-invalid');
+            const gift = $('#gift-' + whatId.val());
+
+            whom.prop("disabled", true);
+            anonymous.prop("disabled", true);
+
             $.post(
                 "/give",
                 {'what': whatId.val(), 'whom': whom.val(), 'anonymous': $('#anonymous').is(':checked') ? 1 : 0}
             )
             .done(function() {
-                giveModal.modal('hide');
+                gift.addClass('offered');
+
+                if (! $('#anonymous').is(':checked')) {
+                    gift.children('footer').html('Offert par <em>' + whom.val() + '</em>');
+                } else {
+                    gift.children('footer').html('Offert');
+                }
+
+                giveAlert
+                    .removeClass('alert-danger')
+                    .addClass('alert-success')
+                    .text('Merci beaucoup !')
+                    .removeClass('d-none');
+
+                setTimeout(function() {
+                    giveModal.modal('hide');
+                    giveAlert
+                        .removeClass('alert-success')
+                        .addClass('alert-danger');
+                }, 1500);
             })
             .fail(function(data) {
                 if (data.responseJSON !== undefined) {
