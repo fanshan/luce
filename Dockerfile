@@ -29,11 +29,16 @@ RUN npm install --global yarn
 
 ADD . /var/www/html
 WORKDIR /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 
 ADD ./docker/nginx/luce.conf /etc/nginx/sites-available/luce.conf
 RUN ln -s /etc/nginx/sites-available/luce.conf /etc/nginx/sites-enabled/luce.conf
 
 RUN nginx -t
+
+RUN composer.phar install --no-dev -o --no-ansi
+RUN yarn install
+RUN ./node_modules/.bin/webpack-cli
 
 EXPOSE 8080
 
