@@ -30,6 +30,9 @@ RUN npm install --global yarn
 ADD ./docker/nginx/luce.conf /etc/nginx/sites-available/luce.conf
 RUN ln -s /etc/nginx/sites-available/luce.conf /etc/nginx/sites-enabled/luce.conf
 
+RUN rm /etc/php/7.2/fpm/pool.d/www.conf
+ADD ./docker/php-fpm/www.conf /etc/php/7.2/fpm/pool.d/www.conf
+
 ADD . /var/www/html
 WORKDIR /var/www/html
 RUN chown -R www-data:www-data /var/www/html
