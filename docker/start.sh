@@ -1,5 +1,7 @@
 #!/bin/sh
 
+id
+
 service nginx start
 service php7.2-fpm start
 
