@@ -27,6 +27,8 @@ RUN chmod a+x /usr/local/bin/composer.phar
 
 RUN npm install --global yarn
 
+RUN rm /etc/nginx/nginx.conf
+ADD ./docker/nginx/nginx.conf /etc/nginx/nginx.conf
 ADD ./docker/nginx/luce.conf /etc/nginx/sites-available/luce.conf
 RUN ln -s /etc/nginx/sites-available/luce.conf /etc/nginx/sites-enabled/luce.conf
 
@@ -35,7 +37,6 @@ ADD ./docker/php-fpm/www.conf /etc/php/7.2/fpm/pool.d/www.conf
 
 ADD . /var/www/html
 WORKDIR /var/www/html
-RUN chown -R www-data:www-data /var/www/html
 
 RUN nginx -t
 

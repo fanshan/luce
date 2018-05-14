@@ -1,7 +1,5 @@
 #!/bin/sh
 
-export
-
 echo "APP_PASSWORD=$APP_PASSWORD" >> .env
 echo "DB_DSN=$DB_DSN" >> .env
 
