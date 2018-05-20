@@ -63,6 +63,23 @@ aside {
     margin-bottom: 1rem;
 }
 
+#colophon-content {
+    padding: 1rem;
+    background: rgba(255, 255, 255, .8);
+}
+
+#colophon p {
+    font-family: serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    text-indent: 2rem;
+    margin-bottom: .5rem;
+}
+
+#colophon em {
+    font-style: normal;
+}
+
 #sidebar {
     z-index: 100;
     width: 100%;
@@ -90,11 +107,4 @@ article.gift.offered footer {
 
 .alert-primary {
     background-color: rgba(204, 230, 255, 0.8);
-}
-
-@media (min-width: 768px) {
-    aside.col-md-3 {
-        position: fixed;
-        right: 0;
-    }
 }

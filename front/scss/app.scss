@@ -1,1 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
+
+.card-columns {
+    @include media-breakpoint-up(lg) {
+        column-count: 4;
+    }
+}

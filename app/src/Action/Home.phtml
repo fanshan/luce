@@ -52,13 +52,35 @@ function build_query_string(array $base, array $query)
 </nav>
 
 <div class="row">
-    <aside class="col-md-3 order-last">
-        <h2 class="border-bottom">À propos</h2>
-        <p>
-            Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.
-        </p>
+    <?php if (empty(http_build_query($query))) : ?>
+    <aside class="col-md-12" id="colophon">
+        <h2 class="border-bottom">Bonjour à tous&nbsp;!</h2>
+        <div id="colophon-content">
+            <p>Je me présente je me prénomme Luce. Papa et maman vous ont annoncé dernièrement que je devrait pointer le
+                bout de mon nez au alentour du 20 août.</p>
+
+            <p>En attendant, mon arrivée ils ont commencé a préparer mon petit nid. Entre leurs achats (commode à langer,
+                armoire, …), les prêts de vêtements de mes cousines, les cadeaux (lits, chaises hautes,… ) et les
+                accessoires faits-main (ensembles, couverture, capes de bain, coussin d’allaitement, doudous, …) par les
+                mamies, les tatas et maman… Mon nid est déjà bien garni. Toutefois, il me manque encore des choses et comme
+                certains d’entre-vous ont demandé à mes parents ce qu'ils leurs feraient plaisir ou ce qu'ils auront besoin
+                et afin d’éviter de se retrouver avec une meute de doudou (je flippe rien que d’y penser <em>😱</em>)&nbsp;;
+                ils ont créé une liste de naissance.</p>
+
+            <p>Bien entendu, vous êtes libres d’offrir ou non ce que vous voulez, vous pouvez rester anonyme, vous mettre à
+                plusieurs pour un même article, l’essentiel est d’indiquer l’article que vous avez choisi d’offrir pour
+                éviter le troupeau de Sophie la girafe <em>😅</em>.</p>
+
+            <p>À savoir que les sites indiqués sont des suggestions, vous pouvez aussi trouver les articles en magasin
+                ou sur d’autres sites.</p>
+
+            <p>Merci à tous et aussi à ceux qui m’ont déjà offert, donné, fabriqué, ou prêté des objets. C'est avec
+                impatiente que j’attend de vous rencontrer en attendant papa et maman vous font pleins bisous <em>😘</em>.
+            </p>
+        </div>
     </aside>
-    <main class="col-md-9">
+    <?php endif; ?>
+    <main class="col-md-12">
     <?php if (!$this->get('list')) : ?>
         <div class="alert alert-primary" role="alert">
             <h2 class="alert-heading">Il n'y a plus rien à voir ici...</h2>
