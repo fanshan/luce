@@ -1,5 +1,8 @@
 <?php
 use ObjectivePHP\Application\Config\ApplicationName;
+use ObjectivePHP\Application\Session\Session;
+
+$session = new Session();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -22,6 +25,13 @@ use ObjectivePHP\Application\Config\ApplicationName;
 
             <footer class="border-top">
                 <p>Propulsé à l'aide de logiciels libres et un peu d'huile de coude. <span class="lead">👨‍👩‍👧</span></p>
+                <?php if ($session->get('password')) : ?>
+                    <address>
+                        🏡&nbsp;Famille Simonin, 11 rue Montplaisir - Appartement 31 - 57070 Metz
+                        <span class="ml-2">☎️&nbsp;<a href="tel:+33661930156">+33&nbsp;6&nbsp;61&nbsp;93&nbsp;01&nbsp;56</a></span>
+                        <span class="ml-2">✉️&nbsp;<a href="mailto:famille@simonin.name">famille@simonin.name</a></span>
+                    </address>
+                <?php endif; ?>
             </footer>
         </main>
     </body>
