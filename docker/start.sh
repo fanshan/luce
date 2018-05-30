@@ -7,7 +7,7 @@ service nginx start
 service php7.2-fpm start
 
 ./vendor/bin/phinx migrate
-./vendor/bin/phinx seed:run
+#./vendor/bin/phinx seed:run
 
 chown -R www-data:www-data ./db/database
 
