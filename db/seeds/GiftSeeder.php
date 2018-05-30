@@ -238,7 +238,9 @@ class GiftSeeder extends AbstractSeed
                 'description' => '',
                 'category' => 'Mes repas',
                 'observed_price' => 10.00,
-                'online_shop_url' => 'https://www.amazon.fr/Skip-Hop-SK-232124-bavoir-Vache/dp/B00WANFL5O/ref=pd_sim_75_4?_encoding=UTF8&pd_rd_i=B00WANFP3M&pd_rd_r=H112TX7TQC6XC44WMW8Y&pd_rd_w=xg2kN&pd_rd_wg=ETRvz&refRID=H112TX7TQC6XC44WMW8Y&th=1'
+                'online_shop_url' => 'https://www.amazon.fr/Skip-Hop-SK-232124-bavoir-Vache/dp/B00WANFL5O/ref=pd_sim_75_4?_encoding=UTF8&pd_rd_i=B00WANFP3M&pd_rd_r=H112TX7TQC6XC44WMW8Y&pd_rd_w=xg2kN&pd_rd_wg=ETRvz&refRID=H112TX7TQC6XC44WMW8Y&th=1',
+                'bought_by' => 'Nathalie F.',
+                'is_buyer_anonymous' => 1
             ],
             [
                 'id' => 28,
@@ -278,7 +280,9 @@ class GiftSeeder extends AbstractSeed
                 'description' => '',
                 'category' => 'Mes repas',
                 'observed_price' => 10.00,
-                'online_shop_url' => 'https://www.amazon.fr/Philips-AVENT-Biberon-Natural-verre/dp/B0093IZQAY/ref=sr_1_1?ie=UTF8&qid=1527530637&sr=8-1&keywords=biberons+avent+verre'
+                'online_shop_url' => 'https://www.amazon.fr/Philips-AVENT-Biberon-Natural-verre/dp/B0093IZQAY/ref=sr_1_1?ie=UTF8&qid=1527530637&sr=8-1&keywords=biberons+avent+verre',
+                'bought_by' => 'Nathalie F.',
+                'is_buyer_anonymous' => 1
             ],
             [
                 'id' => 33,
@@ -286,7 +290,9 @@ class GiftSeeder extends AbstractSeed
                 'description' => '',
                 'category' => 'Mes repas',
                 'observed_price' => 10.00,
-                'online_shop_url' => 'https://www.amazon.fr/Philips-AVENT-Biberon-Natural-verre/dp/B0093IZQAY/ref=sr_1_1?ie=UTF8&qid=1527530637&sr=8-1&keywords=biberons+avent+verre'
+                'online_shop_url' => 'https://www.amazon.fr/Philips-AVENT-Biberon-Natural-verre/dp/B0093IZQAY/ref=sr_1_1?ie=UTF8&qid=1527530637&sr=8-1&keywords=biberons+avent+verre',
+                'bought_by' => 'Nathalie F.',
+                'is_buyer_anonymous' => 1
             ],
             [
                 'id' => 34,
