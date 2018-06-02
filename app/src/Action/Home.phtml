@@ -29,7 +29,7 @@ function build_query_string(array $base, array $query)
         <?php if ($this->get('offered') == BirthListManager::SHOW_ALL) : ?>
             <a href="<?= build_query_string($query, ['offered' => 0]) ?>" class="lead btn btn-success">Afficher ce qui reste à offrir</a>
         <?php else : ?>
-            <a href="<?= build_query_string($query, ['offered' => null]) ?>" class="lead btn btn-success">Touts afficher</a>
+            <a href="<?= build_query_string($query, ['offered' => null]) ?>" class="lead btn btn-success">Tous afficher</a>
         <?php endif; ?>
     </p>
 
