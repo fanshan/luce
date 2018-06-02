@@ -62,7 +62,9 @@ class GiftSeeder extends AbstractSeed
                 'description' => '',
                 'category' => 'Ma chambre',
                 'observed_price' => 40.00,
-                'online_shop_url' => 'https://www.natureetdecouvertes.com/puericulture/chambre-bebe-enfant/veilleuses/veilleuse-enfant-nomade-91219520'
+                'online_shop_url' => 'https://www.natureetdecouvertes.com/puericulture/chambre-bebe-enfant/veilleuses/veilleuse-enfant-nomade-91219520',
+                'bought_by' => 'Christophe PERUVIEN',
+                'is_buyer_anonymous' => 0
             ],
             [
                 'id' => 6,
