@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     php-sqlite3 \
     php-zip \
     php-xml \
+    php-pgsql \
     nodejs
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"

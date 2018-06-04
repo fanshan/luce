@@ -17,11 +17,16 @@ class GiftSeeder extends AbstractSeed
      */
     public function run()
     {
-        $this->table('gift')->truncate();
-        $this->execute('delete from sqlite_sequence where name=\'gift\';');
+        if ($this->getAdapter()->getAdapterType() == 'pgsql') {
+            $this->execute('truncate public.gift cascade;');
+            $this->execute('truncate public.image cascade;');
+        } else {
+            $this->table('gift')->truncate();
+            $this->execute('delete from sqlite_sequence where name=\'gift\';');
 
-        $this->table('image')->truncate();
-        $this->execute('delete from sqlite_sequence where name=\'image\';');
+            $this->table('image')->truncate();
+            $this->execute('delete from sqlite_sequence where name=\'image\';');
+        }
 
         $data = [
             [
