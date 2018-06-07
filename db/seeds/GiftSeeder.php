@@ -20,6 +20,8 @@ class GiftSeeder extends AbstractSeed
         if ($this->getAdapter()->getAdapterType() == 'pgsql') {
             $this->execute('truncate public.gift cascade;');
             $this->execute('truncate public.image cascade;');
+
+            $this->execute('ALTER SEQUENCE image_id_seq RESTART WITH 1;');
         } else {
             $this->table('gift')->truncate();
             $this->execute('delete from sqlite_sequence where name=\'gift\';');
@@ -319,7 +321,7 @@ class GiftSeeder extends AbstractSeed
             ],
             [
                 'id' => 36,
-                'what' => 'Coffrets de soins bébé',
+                'what' => 'Coffret de soins bébé',
                 'description' => '',
                 'category' => 'Ma toilette',
                 'observed_price' => 61.00,
